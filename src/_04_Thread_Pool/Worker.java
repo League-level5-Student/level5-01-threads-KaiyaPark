@@ -12,7 +12,7 @@ public class Worker implements Runnable {
 		// TODO Auto-generated method stub
 		while (!taskQueue.isEmpty()) {
 			Task t = taskQueue.remove();
-			
+			t.perform();
 		}
 	}
 

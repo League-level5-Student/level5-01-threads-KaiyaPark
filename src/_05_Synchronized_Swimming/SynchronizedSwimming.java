@@ -1,5 +1,7 @@
 package _05_Synchronized_Swimming;
 
+import java.util.concurrent.Semaphore;
+
 /*
  * Synchronization is a mechanism which ensures that two concurrent processes (threads)
  * do not simultaneously execute some particular program segment. When one thread wants
@@ -15,7 +17,7 @@ package _05_Synchronized_Swimming;
  */
 public class SynchronizedSwimming {
 	private static final Object swimmingPool = new Object();
-
+	public static Semaphore sem = new Semaphore(1); 
 	public static void main(String[] args) {
 		Swimmer a = new Swimmer("John");
 		Swimmer b = new Swimmer("Sally");
@@ -32,11 +34,13 @@ public class SynchronizedSwimming {
 		Thread.sleep(2000);
 		System.out.println(swimmer.name + " finished!");
 	}
-
+	
 	public static void takeTurn(Swimmer swimmer) {
 		try {
+			sem.acquire();
 			swimLap(swimmer);
 			Thread.sleep(100);
+			sem.release();
 		} catch (InterruptedException ignore) {
 		}
 	}
